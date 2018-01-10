@@ -1,20 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import PageIndex from '../page/index'
-import Page404 from '../page/404'
 
 Vue.use(VueRouter)
+
+const asyncComponent = name => async resolve => resolve(await import(`./page/${name}.vue`))
 
 const router = new VueRouter({
   mode: 'history',
   routes: [
     {
       path: '/',
-      component: PageIndex
+      component: asyncComponent('index')
     },
     {
       path: '*',
-      component: Page404
+      component: asyncComponent('404')
     }
   ]
 })
